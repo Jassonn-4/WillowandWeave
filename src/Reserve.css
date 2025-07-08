@@ -1,0 +1,95 @@
+/* Reserve.css */
+.reserve-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .reserve-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #333;
+  }
+  
+  .reserve-select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+
+  .reserve-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .reserve-slot {
+    border: 1px solid #e0e0e0;
+    padding: 0.75rem;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    color: #333;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+    flex: 1 0 45%;
+    min-width: 150px;
+  }
+  
+  .reserve-slot:hover {
+    background-color: #eef6ff;
+  }
+  
+  .reserve-empty {
+    text-align: center;
+    color: #888;
+    font-size: 0.95rem;
+  }
+
+  .qr-image {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
+  .qr-instruction {
+    color: #333;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  .modal-close {
+    margin-top: 1rem;
+  }

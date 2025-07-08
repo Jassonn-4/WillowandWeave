@@ -1,0 +1,44 @@
+.stylist-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  .StylistList-Cont {
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .main-banner {
+    width: auto;
+    max-height: 480px;
+    display: block;
+    border-radius: 8px;
+    margin: 0 auto;
+  }
+
+  .salon-info {
+    background-color: #F8F6FB;   
+    color: #333;                 
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    padding: 16px 24px;
+    border-radius: 8px;
+    max-width: 400px;
+    margin: 20px auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    line-height: 1.6;
+  }
+
+  .Header-Cont {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+  }

@@ -1,0 +1,55 @@
+.Dashboard-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.Dashboard-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #333;
+}
+
+.Dashboard-select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.Dashboard-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.Dashboard-slot {
+  border: 1px solid #e0e0e0;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  color: #333;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+  flex: 1 0 45%;
+  min-width: 150px;
+}
+
+.Dashboard-slot:hover {
+  background-color: #eef6ff;
+}
+
+.Dashboard-empty {
+  text-align: center;
+  color: #888;
+  font-size: 0.95rem;
+}

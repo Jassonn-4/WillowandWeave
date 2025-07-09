@@ -89,7 +89,7 @@ export default function ViewAppointments() {
             {new Date(slot.appointment_time).toLocaleTimeString([], {
               hour: '2-digit',
               minute: '2-digit',
-            })} {slot.client_name} : {slot.status}
+            })}  {slot.client_name} :  {slot.status}
           </li>
         ))
       ) : (

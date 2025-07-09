@@ -173,7 +173,11 @@ return (
       <div className="modal-content">
         <h3>Payment QR Code</h3>
         <img src={QRUrl} alt="Payment QR Code" className="qr-image" />
-        <p className="qr-instruction">20$ deposit non-refundable 🗿</p>
+        <p className="qr-instruction">All services require a deposit for approval</p>
+        <p className="qr-instruction"> Services $25 and under : $10-$15 deposit</p>
+        <p className="qr-instruction"> Services $80 and under : $20 deposit</p>
+        <p className="qr-instruction"> Services $100 and over : $35 deposit</p>
+        <p className="qr-instruction"> Upon deposit check appointment status under View Appointments on the Stylist Profile card </p>
         <button onClick={() => setShowQRCode(false)} className="modal-close">Close</button>
       </div>
     </div>

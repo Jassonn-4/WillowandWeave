@@ -24,7 +24,7 @@
   }
 
   .salon-info {
-    background-color: #F8F6FB;   
+    background-color: #e8d2c0;   
     color: #333;                 
     font-family: 'Helvetica Neue', sans-serif;
     font-size: 16px;
@@ -36,9 +36,60 @@
     line-height: 1.6;
   }
 
+  .top-section {
+    display: flex;
+    justify-content: center; 
+    align-items: flex-start;
+    gap: 3rem;
+    padding: 2rem;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+
   .Header-Cont {
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .price-list {
+    margin-top: 0;
+    padding: 1rem;
+    background-color: #a4ac86;
+    border-radius: 12px;
+    font-family: 'Georgia', serif;
+    color: #2c2c2c;
+  }
+  
+  .price-list h2 {
+    font-size: 2rem;
     margin-bottom: 1rem;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .category {
+    margin-bottom: 1.5rem;
+  }
+  
+  .category h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .category p {
+    margin: 0.3rem 0;
+  }
+  
+  .note {
+    font-size: 0.85rem;
+    color: #555;
+  }
+  
+  .flex-pricing {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
   }

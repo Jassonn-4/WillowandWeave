@@ -8,6 +8,9 @@
   padding: 2rem;
   box-sizing: border-box;
   background-color: #414833;
+
+  width: 100%;
+  max-width: 100%;
 }
 
 html, body, #root {

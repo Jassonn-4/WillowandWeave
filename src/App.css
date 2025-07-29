@@ -112,12 +112,13 @@ p {
 }
 
 .form-wrapper {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  max-width: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 .form-card {
@@ -129,6 +130,24 @@ p {
   max-width: 800px;
   max-height: 90vh;
   overflow-y: auto;
+}
+
+@media (max-width: 600px) {
+  .form-wrapper {
+    top: 0;
+    left: 0;
+    transform: none;
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    max-height: none;
+    padding: 1rem;
+  }
+
+  .form-card {
+    padding: 1rem;
+    height: 100%;
+  }
 }
 
 .form-card p {
@@ -176,4 +195,10 @@ form button:hover {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .two-col {
+    grid-template-columns: 1fr; /* Stack fields on mobile */
+  }
 }

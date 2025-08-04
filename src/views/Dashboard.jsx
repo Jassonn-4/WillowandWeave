@@ -11,7 +11,41 @@ export default function Dashboard() {
   const [slots, setSlots] = useState([]);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [monthOptions, setMonthOptions] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState('');
+  const [weekOptions, setWeekOptions] = useState([]);
+  const [selectedWeek, setSelectedWeek] = useState('');
+  const [groupedDates, setGroupedDates] = useState({});
   const { id } = useParams();
+
+  const fetchAllAppointments = async () => {
+    let allData = [];
+    let from = 0;
+    const batchSize = 1000;
+    let more = true;
+    while (more) {
+    const{ data, error } = await supabase
+      .from('appointments')
+      .select('appointment_time')
+      .in('status', ['pending', 'approved', 'available', 'N/A'])
+      .eq('stylist_id', id)
+      .range(from, from + batchSize - 1);
+      //.gte('appointment_time', new Date().toISOString());
+
+        if (error) {
+          console.error(error);
+          return;
+        }
+    
+        if (data.length < batchSize) {
+          more = false;
+        }
+    
+        allData = allData.concat(data);
+        from += batchSize;
+    }
+    return allData;
+  }
 
   // dates for dropdown
   useEffect(() => {
@@ -19,25 +53,67 @@ export default function Dashboard() {
     if (!id) return;
 
     const loadDates = async () => {
-      const{ data, error } = await supabase
-        .from('appointments')
-        .select('appointment_time')
-        .in('status', ['pending', 'approved', 'available', 'N/A'])
-        .eq('stylist_id', id)
-        //.gte('appointment_time', new Date().toISOString());
+        const data = await fetchAllAppointments();
+        if (!data) return;
 
-        if (error) console.log(error);
-        else {
-          const uniqueDates = [...new Set(
-            data.map(slot => new Date(slot.appointment_time).toDateString())
-          )];
-          uniqueDates.sort((a, b) => new Date(a) - new Date(b));
-          setDates(uniqueDates);
-          if (uniqueDates.length > 0) setSelectedDate(uniqueDates[0]);
+    const slots = data.map(slot => new Date(slot.appointment_time));
+    const groupedByMonth = {};
+
+    slots.forEach(date => {
+      const month = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+
+      const startOfWeek = new Date(date);
+      startOfWeek.setDate(date.getDate() - startOfWeek.getDay());
+
+      const weekKey = new Date(startOfWeek.toDateString()).toISOString().split('T')[0];
+
+      if (!groupedByMonth[month]) groupedByMonth[month] = {};
+      if (!groupedByMonth[month][weekKey]) groupedByMonth[month][weekKey] = [];
+
+      groupedByMonth[month][weekKey].push(date);
+    });
+
+    console.log("Grouped By Month:", groupedByMonth);
+    setGroupedDates(groupedByMonth);
+
+    const months = Object.keys(groupedByMonth);
+    setMonthOptions(months);
+
+    if (months.length > 0) {
+      // Combine all weeks from all months
+      const allWeeks = months.flatMap(month =>
+        Object.keys(groupedByMonth[month])
+      );
+      const sortedWeeks = [...new Set(allWeeks)].sort();
+      setWeekOptions(sortedWeeks);
+
+      if (sortedWeeks.length > 0) {
+        const firstWeek = sortedWeeks[0];
+        setSelectedWeek(firstWeek);
+
+        const monthWithWeek = months.find(month =>
+          groupedByMonth[month] && groupedByMonth[month][firstWeek]
+        );
+
+        if (monthWithWeek) {
+          setSelectedMonth(monthWithWeek); // sync month with week
+          const sortedDays = [
+            ...new Set(
+              groupedByMonth[monthWithWeek][firstWeek]
+                .sort((a, b) => a - b)
+                .map(d => d.toDateString())
+            )
+          ];
+          setDates(sortedDays);
+          setSelectedDate(sortedDays[0]);
+          console.log("All loaded slots:", slots.map(d => d.toISOString()));
         }
-      };
-      loadDates();
-    }, [id]);
+      }
+    }
+  };
+
+  loadDates();
+}, [id]);
 
     // loads appointment slots with time, name and status
     useEffect(() => {
@@ -175,6 +251,56 @@ export default function Dashboard() {
       <div className="Dashboard-container">
         <h2 className="Dashboard-title">Manage Appointments</h2>
 
+        {/* Month Dropdown */}
+        <select
+        value={selectedMonth}
+        onChange={(e) => {
+          const month = e.target.value;
+          setSelectedMonth(month);
+
+          const newWeeks = Object.keys(groupedDates[month] || {});
+          setWeekOptions(newWeeks);
+          const firstWeek = newWeeks[0];
+          setSelectedWeek(firstWeek);
+
+          const weekDates = groupedDates[month][firstWeek] || [];
+          const dayStrings = Array.from(
+            new Set(weekDates.sort((a, b) => a - b).map(d => d.toDateString()))
+          );
+          setDates(dayStrings);
+          setSelectedDate(dayStrings[0]);
+        }}
+        className="reserve-select"
+        >
+          {monthOptions.map(month => (
+            <option key={month} value={month}>{month}</option>
+          ))}
+        </select>
+
+        {/* Week Dropdown */}
+        <select
+        value={selectedWeek}
+        onChange={(e) => {
+          const week = e.target.value;
+          setSelectedWeek(week);
+
+          const weekDates = groupedDates[selectedMonth][week] || [];
+          const dayStrings = Array.from(
+          new Set(weekDates.sort((a, b) => a - b).map(d => d.toDateString()))
+          );
+          setDates(dayStrings);
+          setSelectedDate(dayStrings[0]);
+        }}
+        className="reserve-select"
+        >
+        {weekOptions.map(week => (
+          <option key={week} value={week}>
+            Week of {new Date(week).toLocaleDateString()}
+          </option>
+        ))}
+        </select>
+        
+        {/* Day Dropdown */}
         <select
         value={selectedDate}
         onChange={(e) => setSelectedDate(e.target.value)}

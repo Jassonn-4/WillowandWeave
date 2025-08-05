@@ -49,55 +49,48 @@ export default function ViewAppointments() {
   useEffect(() => {
     console.log("acquired id:", id);
     if (!id) return;
-
+  
     const loadDates = async () => {
-        const data = await fetchAllAppointments();
-        if (!data) return;
-
-    const slots = data.map(slot => new Date(slot.appointment_time));
-    const groupedByMonth = {};
-
-    slots.forEach(date => {
-      const month = date.toLocaleString('default', { month: 'long', year: 'numeric' });
-
-      const startOfWeek = new Date(date);
-      startOfWeek.setDate(date.getDate() - startOfWeek.getDay());
-
-      const weekKey = new Date(startOfWeek.toDateString()).toISOString().split('T')[0];
-
-      if (!groupedByMonth[month]) groupedByMonth[month] = {};
-      if (!groupedByMonth[month][weekKey]) groupedByMonth[month][weekKey] = [];
-
-      groupedByMonth[month][weekKey].push(date);
-    });
-
-    console.log("Grouped By Month:", groupedByMonth);
-    setGroupedDates(groupedByMonth);
-
-    const months = Object.keys(groupedByMonth);
-    setMonthOptions(months);
-
-    if (months.length > 0) {
-      // Combine all weeks from all months
-      const allWeeks = months.flatMap(month =>
-        Object.keys(groupedByMonth[month])
-      );
-      const sortedWeeks = [...new Set(allWeeks)].sort();
-      setWeekOptions(sortedWeeks);
-
-      if (sortedWeeks.length > 0) {
-        const firstWeek = sortedWeeks[0];
-        setSelectedWeek(firstWeek);
-
-        const monthWithWeek = months.find(month =>
-          groupedByMonth[month] && groupedByMonth[month][firstWeek]
-        );
-
-        if (monthWithWeek) {
-          setSelectedMonth(monthWithWeek); // sync month with week
+      const data = await fetchAllAppointments();
+      if (!data) return;
+  
+      const slots = data.map(slot => new Date(slot.appointment_time));
+      const groupedByMonth = {};
+  
+      slots.forEach(date => {
+        const month = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+  
+        const startOfWeek = new Date(date);
+        startOfWeek.setDate(date.getDate() - startOfWeek.getDay());
+  
+        const weekKey = new Date(startOfWeek.toDateString()).toISOString().split('T')[0];
+  
+        if (!groupedByMonth[month]) groupedByMonth[month] = {};
+        if (!groupedByMonth[month][weekKey]) groupedByMonth[month][weekKey] = [];
+  
+        groupedByMonth[month][weekKey].push(date);
+      });
+  
+      console.log("Grouped By Month:", groupedByMonth);
+      setGroupedDates(groupedByMonth);
+  
+      const months = Object.keys(groupedByMonth);
+      setMonthOptions(months);
+  
+      if (months.length > 0) {
+        const firstMonth = months[0];
+        setSelectedMonth(firstMonth);
+  
+        const firstMonthWeeks = Object.keys(groupedByMonth[firstMonth] || {}).sort();
+        setWeekOptions(firstMonthWeeks);
+  
+        if (firstMonthWeeks.length > 0) {
+          const firstWeek = firstMonthWeeks[0];
+          setSelectedWeek(firstWeek);
+  
           const sortedDays = [
             ...new Set(
-              groupedByMonth[monthWithWeek][firstWeek]
+              groupedByMonth[firstMonth][firstWeek]
                 .sort((a, b) => a - b)
                 .map(d => d.toDateString())
             )
@@ -107,11 +100,10 @@ export default function ViewAppointments() {
           console.log("All loaded slots:", slots.map(d => d.toISOString()));
         }
       }
-    }
-  };
-
-  loadDates();
-}, [id]);
+    };
+  
+    loadDates();
+  }, [id]);
 
     // loads appointment slots with time, name and status
     useEffect(() => {

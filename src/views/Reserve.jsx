@@ -91,34 +91,26 @@ useEffect(() => {
     setMonthOptions(months);
 
     if (months.length > 0) {
-      // Combine all weeks from all months
-      const allWeeks = months.flatMap(month =>
-        Object.keys(groupedByMonth[month])
-      );
-      const sortedWeeks = [...new Set(allWeeks)].sort();
-      setWeekOptions(sortedWeeks);
+      const firstMonth = months[0];
+      setSelectedMonth(firstMonth);
 
-      if (sortedWeeks.length > 0) {
-        const firstWeek = sortedWeeks[0];
+      const firstMonthWeeks = Object.keys(groupedByMonth[firstMonth] || {}).sort();
+      setWeekOptions(firstMonthWeeks);
+
+      if (firstMonthWeeks.length > 0) {
+        const firstWeek = firstMonthWeeks[0];
         setSelectedWeek(firstWeek);
 
-        const monthWithWeek = months.find(month =>
-          groupedByMonth[month] && groupedByMonth[month][firstWeek]
-        );
-
-        if (monthWithWeek) {
-          setSelectedMonth(monthWithWeek); // sync month with week
-          const sortedDays = [
-            ...new Set(
-              groupedByMonth[monthWithWeek][firstWeek]
-                .sort((a, b) => a - b)
-                .map(d => d.toDateString())
-            )
-          ];
-          setDates(sortedDays);
-          setSelectedDate(sortedDays[0]);
-          console.log("All loaded slots:", slots.map(d => d.toISOString()));
-        }
+        const sortedDays = [
+          ...new Set(
+            groupedByMonth[firstMonth][firstWeek]
+              .sort((a, b) => a - b)
+              .map(d => d.toDateString())
+          )
+        ];
+        setDates(sortedDays);
+        setSelectedDate(sortedDays[0]);
+        console.log("All loaded slots:", slots.map(d => d.toISOString()));
       }
     }
   };

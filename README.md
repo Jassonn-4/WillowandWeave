@@ -1,12 +1,30 @@
-# React + Vite
+# Booking Website
+This is a custom-built booking system I created for a friend to manage and schedule appointments.
+It is currently live and in use by their business to streamline client bookings.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Features
+	-	Appointment Fetching – Pulls available appointment slots from the database.
+	-	Month & Week Filtering – Grouped by month and week for easy navigation.
+	-	Dynamic Date Selection – Days automatically update based on the chosen week.
+	-	Real-Time Updates – Data is fetched fresh from the backend so schedules stay current.
+	-	User-Friendly Dropdowns – Simple, clean UI for selecting months, weeks, and specific dates.
 
-Currently, two official plugins are available:
+# Tech Stack
+	-	React (with hooks for state and side effects)
+    -   CSS styling
+    -   supabase (PostgreSQL)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# How it works
+    1.	Data Fetching
+	    -   The app queries the backend for all appointments.
+	2.	Data Grouping
+	    -	Appointments are grouped by Month → Week → Day for easy dropdown navigation.
+	3.	User Selection Flow
+	    -	Select a month → weeks for that month populate automatically.
+	    -	Select a week → available dates for that week appear.
+	    -	Select a date → choose a time slot and confirm.
+        -   Upon confirmation QR code for payments is shown for deposits
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# link:
+https://willow-and-weave.netlify.app/ 
+    

@@ -187,6 +187,38 @@ const handleSubmit = async (e) => {
     return;
   }
 
+  const LAtime = new Date(selectedSlot.appointment_time).toLocaleString("en-US", {
+    timeZone: "America/Los_Angeles",
+    dateStyle: "full",
+    timeStyle: "short",
+  });
+  // send email after update to stylist
+  try {
+    const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-appointment-email`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_KEY}`, 
+      },
+      body: JSON.stringify({
+        stylist_id: selectedSlot.stylist_id,
+        client_name: formData.client_name,
+        client_number: formData.client_number,
+        service_desc: formData.service_desc,
+        time: LAtime,
+      }),
+    });
+
+    const data = await res.json();
+    if (!res.ok || !data.success) {
+      console.error("failed to send email:", data.error);
+    } else {
+      console.log("email sent successfully");
+    }
+  } catch (err) {
+    console.error("error calling edge function:", err.message);
+  }
+
   // Refresh slot list
   setShowModal(false);
   setShowQRCode(true);

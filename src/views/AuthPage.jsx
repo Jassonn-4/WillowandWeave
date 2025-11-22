@@ -34,8 +34,8 @@ export default function AuthPage() {
 
           <div className="category">
             <h3>Cut</h3>
-            <p>Women's Haircut .................................. $60</p>
-            <p>Men's Haircut ..................................... $50</p>
+            <p>Women's Haircut .................................. $45</p>
+            <p>Men's Haircut ..................................... $30</p>
             <p>Child's Haircut .................................... $25</p>
             <p>Bang Trim ........................................... $15</p>
             <p className="note">(All cuts include wash & blowdry)</p>

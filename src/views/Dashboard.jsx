@@ -16,6 +16,8 @@ export default function Dashboard() {
   const [weekOptions, setWeekOptions] = useState([]);
   const [selectedWeek, setSelectedWeek] = useState('');
   const [groupedDates, setGroupedDates] = useState({});
+  const [changeEmail, setChangeEmail] = useState(false);
+  const [email, setEmail] = useState('');
   const { id } = useParams();
 
   const fetchAllAppointments = async () => {
@@ -237,6 +239,18 @@ export default function Dashboard() {
 
     const navigate = useNavigate();
 
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+
+      const { error } = await supabase.auth.updateUser({
+        email: email,
+      });
+      if (error) {
+        console.error("Auth email update failed:", error.message);
+        return;
+      }
+    }
+
   return (
     <>
     <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
@@ -336,6 +350,17 @@ export default function Dashboard() {
       </div>
     </div>
     <button className="bottom-left-button" onClick={() => navigate("/")}> Go Back </button>
+    {!changeEmail ? (
+      <button className="change-email" onClick={() => setChangeEmail(true)}>
+      Change Email?
+      </button>
+    ) : (
+      <form onSubmit={handleSubmit}>
+        <input name="email" placeholder='Email' onChange={(e) => setEmail(e.target.value)} required />
+        <button type="submit">Submit Email</button>
+        <button type="button" onClick={() => setChangeEmail(false)}>Cancel</button>
+      </form>
+    )}
     </>
   );
 }

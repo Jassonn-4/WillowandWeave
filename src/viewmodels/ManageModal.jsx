@@ -21,18 +21,10 @@ export default function ManageModal( {
                 <p>{slot.service_desc}</p>
 
                <div className="modal-form-grid">
-                <form onSubmit={onApprove}>
-                        <button type="submit">Approve</button>
-                </form>
-                <form onSubmit={onPending}>
-                        <button type="submit">Pending</button>
-                </form>
-                <form onSubmit={onAvailable}>
-                        <button type="submit">Available</button>
-                </form>
-                <form onSubmit={onNA}>
-                        <button type="submit">N/A</button>
-                </form>
+                <button type="button" onClick={onApprove}>Approve</button>
+                <button type="button" onClick={onPending}>Pending</button>
+                <button type="button" onClick={onAvailable}>Available</button>
+                <button type="button" onClick={onNA}>N/A</button>
                 <button type="button" onClick={onCancel}>Cancel</button>
                 </div>
             </div>

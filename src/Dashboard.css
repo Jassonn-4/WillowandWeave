@@ -53,3 +53,55 @@
   color: #888;
   font-size: 0.95rem;
 }
+
+.change-email {
+  margin-top: 20px;
+  padding: 10px 16px;
+  background-color: #4b7bec;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.change-email:hover {
+  background-color: #3867d6;
+}
+
+
+/* Email form styling */
+form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 250px;
+}
+
+form input {
+  padding: 10px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+form button[type="submit"] {
+  padding: 10px 16px;
+  background-color: #20bf6b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+form button[type="submit"]:hover {
+  background-color: #18a158;
+}
+
+form button[type="button"] {
+  background-color: red;
+}

@@ -249,6 +249,7 @@ export default function Dashboard() {
         console.error("Auth email update failed:", error.message);
         return;
       }
+      setChangeEmail(false);
     }
 
   return (
